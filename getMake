@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# $1 = ASSIGNMENT
+
+if [[ "$#" -ne 1 ]];
+then
+   echo "Usage: getMake <assignment>"
+   echo "Example of <assignment>: 'Exercise8'"
+
+else
+   cp ~kmammen-grader/evaluations/W20/357/$1/requirements .
+   cp ~kmammen-grader/evaluations/W20/357/$1/Makefile .
+fi
