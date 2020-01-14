@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# $assign = ASSIGNMENT
+
+if [[ "$#" -ne 1 ]];
+then
+   echo "Usage: getTests <assignment>"
+   echo "Example of <assignment>: 'Exercise8'"
+
+else
+   assign=$1
+   p=~kmammen-grader/evaluations/W20/357/$assign/tests
+
+   touch core.tests
+   touch feat.tests
+
+   cat $p/core/value >> core.tests
+   echo "" >> core.tests
+
+   i=1
+   FILE=$p/core/test0$i/description
+
+   while [ -f "$FILE" ];
+   do
+      echo "Test $i:" >> core.tests
+      cat $FILE >> core.tests
+      echo "" >> core.tests
+
+      (( ++i ))
+
+      if (( $i < 10 ))
+      then
+         FILE=$p/core/test0$i/description
+      else
+         FILE=$p/core/test$i/description
+      fi
+   done
+
+   i=1
+   VAL=$p/feature/test0$i/value
+   DESC=$p/feature/test0$i/description
+
+   while [ -f "$VAL" ];
+   do
+      echo "Test $i:" >> feat.tests
+      cat $VAL >> feat.tests
+      cat $DESC >> feat.tests
+      echo "" >> feat.tests
+
+      (( ++i ))
+
+      if (( $i < 10 ))
+      then
+         VAL=$p/feature/test0$i/value
+         DESC=$p/feature/test0$i/description
+      else
+         VAL=$p/feature/test$i/value
+         DESC-$p/feature/test$i/description
+      fi
+   done
+fi
