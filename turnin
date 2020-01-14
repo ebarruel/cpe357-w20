@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# $assign : ASSIGNMENT
+# $@      : files to submit
+
+if [[ "$#" -lt 3 ]];
+then
+   echo "Usage: turnin <assignment> <files to submit>";
+   echo "Example of assignment: 'Exercise8'";
+else
+   assign=$1
+   shift
+
+   zip $assign.zip $@
+   handin kmammen-grader $assign-Section5 $assign.zip
+fi
