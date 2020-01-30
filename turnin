@@ -3,14 +3,24 @@
 # $assign : ASSIGNMENT
 # $@      : files to submit
 
-if [[ "$#" -lt 3 ]];
+if [[ "$#" -lt 2 ]];
 then
-   echo "Usage: turnin <assignment> <files to submit>";
-   echo "Example of assignment: 'Exercise8'";
+   echo "Usage: turnin <option> <assignment> <files to submit>";
+   echo "<option> = nothing if exercise, '-p' if project";
+   echo "Example of <assignment>: 'Exercise8'";
 else
-   assign=$1
-   shift
+   if [[ $1 == "-p" ]];
+   then
+      shift
+      assign=$1
+      shift
 
-   zip $assign.zip $@
-   handin kmammen-grader $assign-Section5 $assign.zip
+      zip $assign.zip $@
+      handin kmammen-grader $assign $assign.zip
+   else
+      assign=$1
+      shift
+      zip $assign.zip $@
+      handin kmammen-grader $assign-Section5 $assign.zip
+   fi
 fi
