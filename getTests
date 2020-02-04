@@ -11,52 +11,46 @@ else
    assign=$1
    p=~kmammen-grader/evaluations/W20/357/$assign/tests
 
-   touch core.tests
-   touch feat.tests
+   # ***** CORE TESTS *****
 
-   echo "Value:" >> core.tests
-   cat $p/core/value >> core.tests
-   echo "" >> core.tests
+   CORE=$p/core
 
-   i=1
-   FILE=$p/core/test0$i/description
+   if [ -d "$CORE" ]
+   then
+      touch core.tests
 
-   while [ -f "$FILE" ];
-   do
-      echo "Test $i:" >> core.tests
-      cat $FILE >> core.tests
+      echo -n "Value: " >> core.tests
+      cat $CORE/value >> core.tests
       echo "" >> core.tests
 
-      (( ++i ))
+      while IFS= read -r line ;
+      do
+         DESC=$CORE/$line/description
 
-      if (( $i < 10 ))
-      then
-         FILE=$p/core/test0$i/description
-      else
-         FILE=$p/core/test$i/description
-      fi
-   done
+         echo "$line:" >> core.tests
+         cat $DESC >> core.tests
+         echo "" >> core.tests
+      done < $CORE/testList
+   fi
 
-   i=1
-   VAL=$p/feature/test0$i/value
-   DESC=$p/feature/test0$i/description
+   # ***** FEATURE TESTS *****
 
-   while [ -f "$VAL" ];
-   do
-      echo "Test $i:" >> feat.tests
-      cat $VAL >> feat.tests
-      cat $DESC >> feat.tests
-      echo "" >> feat.tests
+   FEAT=$p/feature
 
-      (( ++i ))
+   if [ -d "$FEAT" ]
+   then
+      touch feat.tests
 
-      if (( $i < 10 ))
-      then
-         VAL=$p/feature/test0$i/value
-         DESC=$p/feature/test0$i/description
-      else
-         VAL=$p/feature/test$i/value
-         DESC-$p/feature/test$i/description
-      fi
-   done
+      while IFS= read -r line;
+      do
+         VAL=$FEAT/$line/value
+         DESC=$FEAT/$line/description
+
+         echo -n "$line: " >> feat.tests
+         cat $VAL >> feat.tests
+         cat $DESC >> feat.tests
+         echo "" >> feat.tests
+      done < $FEAT/testList
+   fi
+
 fi
