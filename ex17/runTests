@@ -1,0 +1,78 @@
+#!/bin/bash
+
+test01 ()
+{
+   echo ""
+   echo "*** Test 1: ***"
+   echo "Test with an array with 1 element."
+   ./a.out 1 15 > my01.out
+   ./sol 1 15 > true01.out
+   diff -q my01.out true01.out
+}
+
+test02 ()
+{
+   echo ""
+   echo "*** Test 2: ***"
+   echo "Test with an array with 10 elements."
+   ./a.out 10 3 > my02.out
+   ./sol 10 3 > true02.out
+   diff -q my02.out true02.out
+}
+
+test03 ()
+{
+   echo ""
+   echo "*** Test 3: ***"
+   echo "Test with an array with 100 elements."
+   ./a.out 100 47 > my03.out
+   ./sol 100 47 > true03.out
+   diff -q my03.out true03.out
+}
+
+test04 ()
+{
+   echo ""
+   echo "*** Test 4: ***"
+   echo "Test with an array with 1000 elements."
+   ./a.out 1000 414 > my04.out
+   ./sol 1000 414 > true04.out
+   diff -q my04.out true04.out
+}
+
+test05 ()
+{
+   echo ""
+   echo "*** Test 5: ***"
+   echo "Test with an array with some number of elements between 2 and 999."
+   ./a.out 597 3 > my05.out
+   ./sol 597 3 > true05.out
+   diff -q my05.out true05.out
+}
+
+if [[ "$#" == 0 ]]
+then
+   test01
+   test02
+   test03
+   test04
+   test05
+else
+   case "$1" in
+      "1")
+         test01
+         ;;
+      "2")
+         test02
+         ;;
+      "3")
+         test03
+         ;;
+      "4")
+         test04
+         ;;
+      "5")
+         test05
+         ;;
+   esac
+fi
